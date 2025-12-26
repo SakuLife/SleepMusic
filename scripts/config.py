@@ -21,15 +21,15 @@ def load_settings():
     return {
         "kieai_api_key": get_env("KIEAI_API_KEY", required=True),
         "kieai_api_base": get_env("KIEAI_API_BASE", "https://api.kie.ai"),
-        "kieai_suno_endpoint": get_env("KIEAI_SUNO_ENDPOINT", "/suno/generate"),
+        "kieai_suno_endpoint": get_env("KIEAI_SUNO_ENDPOINT", "/api/v1/generate"),
         "kieai_nanobanana_endpoint": get_env(
-            "KIEAI_NANOBANANA_ENDPOINT", "/nanobanana/generate"
+            "KIEAI_NANOBANANA_ENDPOINT", "/api/v1/jobs/createTask"
         ),
         "drive_folder_id": get_env("DRIVE_FOLDER_ID"),
         "sheets_id": get_env("SHEETS_ID"),
-        "sheets_range": get_env("SHEETS_RANGE", "Sheet1!A1"),
+        "sheets_range": get_env("SHEETS_RANGE", "Sheet1!A2"),
         "discord_webhook_url": get_env("DISCORD_WEBHOOK_URL"),
-        "gcp_service_account": load_json_env("GCP_SERVICE_ACCOUNT_JSON"),
+        "gcp_service_account": load_json_env("GCP_SERVICE_ACCOUNT_JSON") if get_env("GCP_SERVICE_ACCOUNT_JSON") else None,
         "youtube_client_id": get_env("YOUTUBE_CLIENT_ID", required=True),
         "youtube_client_secret": get_env("YOUTUBE_CLIENT_SECRET", required=True),
         "youtube_refresh_token": get_env("YOUTUBE_REFRESH_TOKEN", required=True),
@@ -37,7 +37,7 @@ def load_settings():
         "max_retries": int(get_env("MAX_RETRIES", "2")),
         "target_minutes": int(get_env("TARGET_MINUTES", "90")),
         "target_variance_minutes": int(get_env("TARGET_VARIANCE_MINUTES", "5")),
-        "lowpass_hz": int(get_env("LOWPASS_HZ", "8000")),
+        "lowpass_hz": int(get_env("LOWPASS_HZ", "4000")),
         "crossfade_seconds": int(get_env("CROSSFADE_SECONDS", "12")),
         "fadeout_seconds": int(get_env("FADEOUT_SECONDS", "5")),
     }

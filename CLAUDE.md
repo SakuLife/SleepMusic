@@ -153,23 +153,30 @@ Service account needs:
 
 ### Environment Variables
 
-See `.env.example` for all variables. Critical ones:
+See `.env.example` for all variables.
 
-**API Keys (required)**:
+**Required Secrets** (must configure in GitHub Secrets or local .env):
 - `KIEAI_API_KEY`: KieAI API key for Suno and Nano Banana
 - `YOUTUBE_CLIENT_ID`, `YOUTUBE_CLIENT_SECRET`, `YOUTUBE_REFRESH_TOKEN`: YouTube OAuth2
-- `GCP_SERVICE_ACCOUNT_JSON`: Full JSON key file as string (for Drive/Sheets)
+- `GCP_SERVICE_ACCOUNT_JSON`: Full GCP service account JSON as string (for Drive/Sheets)
 
-**Audio Processing**:
-- `LOWPASS_HZ` (default 4000): Lowpass filter cutoff. Lower = softer/darker sound
-- `TARGET_MINUTES` (default 90): Target video length
-- `CROSSFADE_SECONDS` (default 12): Crossfade duration when looping
-- `FADEOUT_SECONDS` (default 5): Final fadeout duration
+**Optional Secrets** (for backup and logging):
+- `DRIVE_FOLDER_ID`: Google Drive folder for video backup
+- `SHEETS_ID`: Google Sheets for execution logging
+- `DISCORD_WEBHOOK_URL`: Discord notifications
 
-**Endpoints** (defaults work, only override if KieAI changes):
-- `KIEAI_API_BASE`: Default `https://api.kie.ai`
-- `KIEAI_SUNO_ENDPOINT`: Default `/api/v1/generate`
-- `KIEAI_NANOBANANA_ENDPOINT`: Default `/api/v1/jobs/createTask`
+**Configuration Defaults** (defined in `scripts/config.py`, rarely need to override):
+- `LOWPASS_HZ=4000`: Lowpass filter cutoff. Lower = softer/darker sound
+- `TARGET_MINUTES=90`: Target video length
+- `TARGET_VARIANCE_MINUTES=5`: Random variance in duration (for YouTube algorithm)
+- `CROSSFADE_SECONDS=12`: Crossfade duration when looping audio
+- `FADEOUT_SECONDS=5`: Final fadeout duration
+- `YOUTUBE_PRIVACY=public`: Video privacy setting
+- `MAX_RETRIES=2`: API retry attempts
+- `KIEAI_API_BASE=https://api.kie.ai`: KieAI base URL
+- `KIEAI_SUNO_ENDPOINT=/api/v1/generate`: Suno endpoint
+- `KIEAI_NANOBANANA_ENDPOINT=/api/v1/jobs/createTask`: Nano Banana endpoint
+- `SHEETS_RANGE=Sheet1!A2`: Sheets append range
 
 ### Output Structure
 

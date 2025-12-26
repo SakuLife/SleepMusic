@@ -12,29 +12,26 @@ Automated daily pipeline to generate sleep BGM, create images, render a video, s
 - Python 3.11+
 - ffmpeg available on PATH
 
-## Secrets / Environment Variables
-Required:
-- `KIEAI_API_KEY`
-- `GCP_SERVICE_ACCOUNT_JSON` (service account JSON string)
-- `YOUTUBE_CLIENT_ID`
-- `YOUTUBE_CLIENT_SECRET`
-- `YOUTUBE_REFRESH_TOKEN`
+## Required Secrets (GitHub Actions / Environment Variables)
 
-Optional (defaults provided when empty):
-- `KIEAI_API_BASE` (default: `https://api.kie.ai`)
-- `KIEAI_SUNO_ENDPOINT` (default: `/api/v1/generate`)
-- `KIEAI_NANOBANANA_ENDPOINT` (default: `/api/v1/jobs/createTask`)
-- `DRIVE_FOLDER_ID`
-- `SHEETS_ID`
-- `SHEETS_RANGE` (default: `Sheet1!A1`)
-- `DISCORD_WEBHOOK_URL`
-- `YOUTUBE_PRIVACY` (default: `public`)
-- `MAX_RETRIES` (default: `2`)
-- `TARGET_MINUTES` (default: `90`)
-- `TARGET_VARIANCE_MINUTES` (default: `5`)
-- `LOWPASS_HZ` (default: `8000`)
-- `CROSSFADE_SECONDS` (default: `12`)
-- `FADEOUT_SECONDS` (default: `5`)
+**Must configure these**:
+- `KIEAI_API_KEY` - KieAI API key for Suno and Nano Banana
+- `YOUTUBE_CLIENT_ID` - YouTube OAuth2 client ID
+- `YOUTUBE_CLIENT_SECRET` - YouTube OAuth2 client secret
+- `YOUTUBE_REFRESH_TOKEN` - YouTube OAuth2 refresh token
+- `GCP_SERVICE_ACCOUNT_JSON` - Full GCP service account JSON (for Drive/Sheets)
+
+**Optional (for backup and logging)**:
+- `DRIVE_FOLDER_ID` - Google Drive folder ID for video backup
+- `SHEETS_ID` - Google Sheets ID for execution logging
+- `DISCORD_WEBHOOK_URL` - Discord webhook for notifications
+
+**Configuration defaults** (in `scripts/config.py`, rarely need to override):
+- `LOWPASS_HZ=4000` - Audio lowpass filter frequency
+- `TARGET_MINUTES=90` - Target video duration
+- `CROSSFADE_SECONDS=12` - Audio loop crossfade duration
+- `YOUTUBE_PRIVACY=public` - YouTube video privacy setting
+- See `.env.example` for full list
 
 ## Running Locally
 ```bash
