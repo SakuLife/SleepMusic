@@ -1,0 +1,49 @@
+name: daily-sleepmusic
+
+on:
+  schedule:
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Install Python deps
+        run: pip install -r requirements.txt
+
+      - name: Run pipeline
+        env:
+          KIEAI_API_KEY: ${{ secrets.KIEAI_API_KEY }}
+          KIEAI_API_BASE: ${{ secrets.KIEAI_API_BASE }}
+          KIEAI_SUNO_ENDPOINT: ${{ secrets.KIEAI_SUNO_ENDPOINT }}
+          KIEAI_NANOBANANA_ENDPOINT: ${{ secrets.KIEAI_NANOBANANA_ENDPOINT }}
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          SHEETS_ID: ${{ secrets.SHEETS_ID }}
+          SHEETS_RANGE: ${{ secrets.SHEETS_RANGE }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          GCP_SERVICE_ACCOUNT_JSON: ${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_PRIVACY: ${{ secrets.YOUTUBE_PRIVACY }}
+          MAX_RETRIES: ${{ secrets.MAX_RETRIES }}
+          TARGET_MINUTES: ${{ secrets.TARGET_MINUTES }}
+          TARGET_VARIANCE_MINUTES: ${{ secrets.TARGET_VARIANCE_MINUTES }}
+          LOWPASS_HZ: ${{ secrets.LOWPASS_HZ }}
+          CROSSFADE_SECONDS: ${{ secrets.CROSSFADE_SECONDS }}
+          FADEOUT_SECONDS: ${{ secrets.FADEOUT_SECONDS }}
+        run: python scripts/run_pipeline.py

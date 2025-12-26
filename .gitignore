@@ -1,0 +1,26 @@
+# Environment
+.env
+.venv/
+venv/
+
+# GCP Service Account
+*.json
+!config/*.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Output
+output/
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+.claude/
