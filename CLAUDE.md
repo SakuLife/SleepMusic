@@ -216,6 +216,13 @@ Service accounts cannot upload to personal Google Drive. You must:
 
 Alternatively, disable Drive backup by not setting `DRIVE_FOLDER_ID` secret. The pipeline will skip Drive upload and continue normally.
 
+### YouTube Custom Thumbnail Permission Denied
+Custom thumbnails require a **verified YouTube account**. If you see "doesn't have permissions to upload and set custom video thumbnails":
+1. Verify your YouTube account (requires phone verification)
+2. Or disable thumbnail upload by commenting out the `set_thumbnail` call
+
+The pipeline will now continue even if thumbnail upload fails.
+
 ### YouTube Upload Quota Exceeded
 YouTube API has daily upload quotas. Free tier: 6 uploads/day. Pipeline runs once daily (20:00 JST) to stay within limits.
 

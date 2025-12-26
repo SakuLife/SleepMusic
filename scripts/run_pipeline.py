@@ -172,17 +172,24 @@ def main():
         ),
         max_retries=settings["max_retries"],
     )
+    print(f"Video uploaded successfully: https://youtu.be/{video_id}")
 
-    retry_call(
-        lambda: set_thumbnail(
-            settings["youtube_client_id"],
-            settings["youtube_client_secret"],
-            settings["youtube_refresh_token"],
-            video_id,
-            thumb_path,
-        ),
-        max_retries=settings["max_retries"],
-    )
+    # Set thumbnail (optional, requires verified YouTube account)
+    try:
+        retry_call(
+            lambda: set_thumbnail(
+                settings["youtube_client_id"],
+                settings["youtube_client_secret"],
+                settings["youtube_refresh_token"],
+                video_id,
+                thumb_path,
+            ),
+            max_retries=settings["max_retries"],
+        )
+        print("Thumbnail set successfully")
+    except Exception as e:
+        print(f"Warning: Thumbnail upload failed (continuing anyway): {e}")
+        print("Note: Custom thumbnails require a verified YouTube account")
 
     youtube_url = f"https://youtu.be/{video_id}"
 
