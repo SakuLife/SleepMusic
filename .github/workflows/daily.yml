@@ -27,6 +27,7 @@ jobs:
 
       - name: Run pipeline
         env:
+          PYTHONPATH: .
           KIEAI_API_KEY: ${{ secrets.KIEAI_API_KEY }}
           KIEAI_API_BASE: ${{ secrets.KIEAI_API_BASE }}
           KIEAI_SUNO_ENDPOINT: ${{ secrets.KIEAI_SUNO_ENDPOINT }}
