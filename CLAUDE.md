@@ -161,7 +161,7 @@ See `.env.example` for all variables.
 - `GCP_SERVICE_ACCOUNT_JSON`: Full GCP service account JSON as string (for Drive/Sheets)
 
 **Optional Secrets** (for backup and logging):
-- `DRIVE_FOLDER_ID`: Google Drive folder for video backup
+- `DRIVE_FOLDER_ID`: Google Drive **shared drive** folder ID (service accounts cannot upload to personal Drive)
 - `SHEETS_ID`: Google Sheets for execution logging
 - `DISCORD_WEBHOOK_URL`: Discord notifications
 
@@ -207,6 +207,14 @@ Video rendering requires ffmpeg on PATH. Install via:
 
 ### KieAI API 422 Errors
 Usually means incorrect payload format. For Nano Banana, only send `model` and `input` fields - no `seed`, `with_text`, or `callBackUrl`.
+
+### Google Drive Upload: "Service Accounts do not have storage quota"
+Service accounts cannot upload to personal Google Drive. You must:
+1. Create a **Shared Drive** in Google Drive
+2. Add the service account email as a member
+3. Use the shared drive folder ID in `DRIVE_FOLDER_ID`
+
+Alternatively, disable Drive backup by not setting `DRIVE_FOLDER_ID` secret. The pipeline will skip Drive upload and continue normally.
 
 ### YouTube Upload Quota Exceeded
 YouTube API has daily upload quotas. Free tier: 6 uploads/day. Pipeline runs once daily (20:00 JST) to stay within limits.

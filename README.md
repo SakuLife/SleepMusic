@@ -22,7 +22,7 @@ Automated daily pipeline to generate sleep BGM, create images, render a video, s
 
 **Optional (for Drive backup and Sheets logging)**:
 - `GCP_SERVICE_ACCOUNT_JSON` - Full GCP service account JSON
-- `DRIVE_FOLDER_ID` - Google Drive folder ID for video backup
+- `DRIVE_FOLDER_ID` - Google Drive **shared drive** folder ID (service accounts cannot use personal Drive)
 - `SHEETS_ID` - Google Sheets ID for execution logging
 
 **Optional (for notifications)**:

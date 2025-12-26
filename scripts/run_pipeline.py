@@ -144,15 +144,20 @@ def main():
 
     render_video(bg_path, processed_audio, video_path)
 
-    # Upload to Drive (optional, requires GCP service account)
+    # Upload to Drive (optional, requires GCP service account and shared drive)
     drive_url = None
     if settings["gcp_service_account"] and settings["drive_folder_id"]:
-        drive_url = upload_to_drive(
-            settings["gcp_service_account"],
-            video_path,
-            os.path.basename(video_path),
-            settings["drive_folder_id"],
-        )
+        try:
+            drive_url = upload_to_drive(
+                settings["gcp_service_account"],
+                video_path,
+                os.path.basename(video_path),
+                settings["drive_folder_id"],
+            )
+            print(f"Uploaded to Drive: {drive_url}")
+        except Exception as e:
+            print(f"Warning: Drive upload failed (continuing anyway): {e}")
+            # Continue pipeline even if Drive upload fails
 
     video_id = retry_call(
         lambda: upload_video(
@@ -183,35 +188,47 @@ def main():
 
     # Log to Sheets (optional, requires GCP service account)
     if settings["gcp_service_account"] and settings["sheets_id"]:
-        append_row(
-            settings["gcp_service_account"],
-            settings["sheets_id"],
-            settings["sheets_range"],
-            [
-                now.strftime("%Y-%m-%d %H:%M:%S"),
-                seed,
-                suno_prompt,
-                bg_prompt,
-                thumb_prompt,
-                drive_url or "N/A",
-                youtube_url,
-                "success",
-            ],
-        )
+        try:
+            append_row(
+                settings["gcp_service_account"],
+                settings["sheets_id"],
+                settings["sheets_range"],
+                [
+                    now.strftime("%Y-%m-%d %H:%M:%S"),
+                    seed,
+                    suno_prompt,
+                    bg_prompt,
+                    thumb_prompt,
+                    drive_url or "N/A",
+                    youtube_url,
+                    "success",
+                ],
+            )
+            print(f"Logged to Sheets: {settings['sheets_id']}")
+        except Exception as e:
+            print(f"Warning: Sheets logging failed (continuing anyway): {e}")
 
     # Discord notification (optional)
     if settings["discord_webhook_url"]:
-        notify(
-            settings["discord_webhook_url"],
-            f"Upload complete: {youtube_url}",
-        )
+        try:
+            notify(
+                settings["discord_webhook_url"],
+                f"Upload complete: {youtube_url}",
+            )
+        except Exception as e:
+            print(f"Warning: Discord notification failed: {e}")
 
 
 if __name__ == "__main__":
     try:
         main()
+        print("\nPipeline completed successfully!")
     except Exception as exc:
+        print(f"\nPipeline failed: {exc}")
         webhook = os.getenv("DISCORD_WEBHOOK_URL")
         if webhook:
-            notify(webhook, f"Pipeline failed: {exc}")
+            try:
+                notify(webhook, f"Pipeline failed: {exc}")
+            except Exception:
+                pass  # Don't fail on notification error
         raise
