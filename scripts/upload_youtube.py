@@ -40,9 +40,12 @@ def upload_video(
                 "title": title,
                 "description": description,
                 "tags": tags,
-                "categoryId": "10",
+                "categoryId": "10",  # Music category
             },
-            "status": {"privacyStatus": privacy_status},
+            "status": {
+                "privacyStatus": privacy_status,
+                "selfDeclaredMadeForKids": False,  # Not made for kids
+            },
         },
         media_body=media,
     )

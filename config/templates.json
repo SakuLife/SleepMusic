@@ -21,8 +21,8 @@
     "Tonight's Sleep BGM | {season_en} {mood_en} ambient | 90 min",
     "Sleep Music {season_en} edition | {mood_en} vibes for 90 min"
   ],
-  "description_template_jp": "今日のBGMは{season_jp}の{mood_jp}をイメージした睡眠用音楽です。\\n90分のループで眠りをサポートします。",
-  "description_template_en": "Tonight's sleep music is inspired by {season_en} and a {mood_en} feeling.\\nA 90-minute loop to help you fall asleep.",
+  "description_template_jp": "今日のBGMは{season_jp}の{mood_jp}をイメージした睡眠用音楽です。\n90分のループで眠りをサポートします。",
+  "description_template_en": "Tonight's sleep music is inspired by {season_en} and a {mood_en} feeling.\nA 90-minute loop to help you fall asleep.",
   "tags": [
     "sleep music",
     "relaxing",
