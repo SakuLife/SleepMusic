@@ -11,6 +11,7 @@ Automated daily pipeline to generate sleep BGM, create images, render a video, s
 ## Requirements
 - Python 3.11+
 - ffmpeg available on PATH
+- **YouTube account verified** (required for 15+ minute videos): https://www.youtube.com/verify
 
 ## Required Secrets (GitHub Actions / Environment Variables)
 

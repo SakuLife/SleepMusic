@@ -228,6 +228,16 @@ Custom thumbnails require a **verified YouTube account**. If you see "doesn't ha
 
 The pipeline will now continue even if thumbnail upload fails.
 
+### YouTube Account Not Verified for 15+ Minute Videos
+**IMPORTANT**: YouTube requires phone verification to upload videos longer than 15 minutes.
+
+To verify your account:
+1. Go to https://www.youtube.com/verify
+2. Enter your phone number
+3. Enter the verification code sent via SMS
+
+This is a **one-time setup** required for all 15+ minute videos. Without verification, uploads will fail with an error.
+
 ### YouTube Upload Timeout or "Processing too long" Error
 For large videos (90+ minutes), uploads may timeout. The code now uses:
 - **Resumable uploads** with 10MB chunks

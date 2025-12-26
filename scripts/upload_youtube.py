@@ -69,6 +69,12 @@ def upload_video(
                     raise Exception(f"Upload failed after {max_retries} retries: {error}")
                 print(f"{error}. Retrying in {retry_count * 2} seconds...")
                 time.sleep(retry_count * 2)
+            elif e.resp.status == 403 and "uploadLimitExceeded" in str(e):
+                # Account not verified for 15+ minute videos
+                raise Exception(
+                    "YouTube account not verified for 15+ minute videos. "
+                    "Please verify your account at https://www.youtube.com/verify"
+                )
             else:
                 raise
 
