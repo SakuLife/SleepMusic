@@ -27,7 +27,6 @@ jobs:
 
       - name: Run pipeline
         env:
-          PYTHONPATH: .
           KIEAI_API_KEY: ${{ secrets.KIEAI_API_KEY }}
           KIEAI_API_BASE: ${{ secrets.KIEAI_API_BASE }}
           KIEAI_SUNO_ENDPOINT: ${{ secrets.KIEAI_SUNO_ENDPOINT }}
@@ -47,4 +46,4 @@ jobs:
           LOWPASS_HZ: ${{ secrets.LOWPASS_HZ }}
           CROSSFADE_SECONDS: ${{ secrets.CROSSFADE_SECONDS }}
           FADEOUT_SECONDS: ${{ secrets.FADEOUT_SECONDS }}
-        run: python scripts/run_pipeline.py
+        run: PYTHONPATH=. python scripts/run_pipeline.py
