@@ -39,7 +39,7 @@ Optional (defaults provided when empty):
 ## Running Locally
 ```bash
 pip install -r requirements.txt
-python scripts/run_pipeline.py
+PYTHONPATH=. python scripts/run_pipeline.py
 ```
 
 ## Notes

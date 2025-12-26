@@ -35,11 +35,13 @@ python scripts/get_youtube_token.py
 
 ```bash
 # Full pipeline (generates music, images, video, uploads everything)
-python scripts/run_pipeline.py
+PYTHONPATH=. python scripts/run_pipeline.py
 
 # Test audio generation only (skips image generation and uploads)
-python scripts/test_audio.py
+PYTHONPATH=. python scripts/test_audio.py
 ```
+
+Note: `PYTHONPATH=.` is required for the `scripts` module imports to work correctly.
 
 ### System Requirements
 - **Python 3.11+**
