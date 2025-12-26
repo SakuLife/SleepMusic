@@ -14,17 +14,19 @@ Automated daily pipeline to generate sleep BGM, create images, render a video, s
 
 ## Required Secrets (GitHub Actions / Environment Variables)
 
-**Must configure these**:
+**Minimum required (for YouTube upload only)**:
 - `KIEAI_API_KEY` - KieAI API key for Suno and Nano Banana
 - `YOUTUBE_CLIENT_ID` - YouTube OAuth2 client ID
 - `YOUTUBE_CLIENT_SECRET` - YouTube OAuth2 client secret
 - `YOUTUBE_REFRESH_TOKEN` - YouTube OAuth2 refresh token
-- `GCP_SERVICE_ACCOUNT_JSON` - Full GCP service account JSON (for Drive/Sheets)
 
-**Optional (for backup and logging)**:
+**Optional (for Drive backup and Sheets logging)**:
+- `GCP_SERVICE_ACCOUNT_JSON` - Full GCP service account JSON
 - `DRIVE_FOLDER_ID` - Google Drive folder ID for video backup
 - `SHEETS_ID` - Google Sheets ID for execution logging
-- `DISCORD_WEBHOOK_URL` - Discord webhook for notifications
+
+**Optional (for notifications)**:
+- `DISCORD_WEBHOOK_URL` - Discord webhook for success/error notifications
 
 **Configuration defaults** (in `scripts/config.py`, rarely need to override):
 - `LOWPASS_HZ=4000` - Audio lowpass filter frequency
