@@ -9,12 +9,20 @@ def get_env(name, default=None, required=False):
     return value
 
 
-def load_json_env(name):
-    raw = get_env(name, required=True)
+def load_json_env(name, required=False):
+    raw = get_env(name, required=required)
+    if not raw:
+        return None
     try:
         return json.loads(raw)
     except json.JSONDecodeError as exc:
-        raise RuntimeError(f"Invalid JSON in env var: {name}") from exc
+        # Show first 100 chars to help debug
+        preview = raw[:100] + "..." if len(raw) > 100 else raw
+        raise RuntimeError(
+            f"Invalid JSON in env var: {name}\n"
+            f"Preview: {preview}\n"
+            f"Error: {exc}"
+        ) from exc
 
 
 def load_settings():
@@ -29,7 +37,7 @@ def load_settings():
         "sheets_id": get_env("SHEETS_ID"),
         "sheets_range": get_env("SHEETS_RANGE", "Sheet1!A2"),
         "discord_webhook_url": get_env("DISCORD_WEBHOOK_URL"),
-        "gcp_service_account": load_json_env("GCP_SERVICE_ACCOUNT_JSON") if get_env("GCP_SERVICE_ACCOUNT_JSON") else None,
+        "gcp_service_account": load_json_env("GCP_SERVICE_ACCOUNT_JSON"),
         "youtube_client_id": get_env("YOUTUBE_CLIENT_ID", required=True),
         "youtube_client_secret": get_env("YOUTUBE_CLIENT_SECRET", required=True),
         "youtube_refresh_token": get_env("YOUTUBE_REFRESH_TOKEN", required=True),
