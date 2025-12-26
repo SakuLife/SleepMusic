@@ -92,7 +92,7 @@ class KieAIClient:
 
         raise RuntimeError(f"Task {task_id} timed out after {max_wait}s")
 
-    def generate_nanobanana(self, prompt, seed, with_text=False, model="google/nano-banana"):
+    def generate_nanobanana(self, prompt, seed=None, with_text=False, model="google/nano-banana"):
         """Generate image using Nano Banana API (async)"""
         url = urljoin(self.api_base, self.nanobanana_endpoint)
 
@@ -103,9 +103,6 @@ class KieAIClient:
                 "output_format": "png",
                 "image_size": "16:9",
             },
-            "seed": seed,
-            "with_text": with_text,
-            "callBackUrl": "http://localhost:8000/callback",
         }
 
         # Submit generation task
