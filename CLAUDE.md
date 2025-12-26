@@ -210,9 +210,14 @@ Usually means incorrect payload format. For Nano Banana, only send `model` and `
 
 ### Google Drive Upload: "Service Accounts do not have storage quota"
 Service accounts cannot upload to personal Google Drive. You must:
-1. Create a **Shared Drive** in Google Drive
-2. Add the service account email as a member
-3. Use the shared drive folder ID in `DRIVE_FOLDER_ID`
+1. Create a **Shared Drive** in Google Drive (left sidebar → Shared drives → New)
+2. Create a folder inside the shared drive (e.g., "output")
+3. Add the service account email as a member:
+   - Right-click the shared drive → Manage members
+   - Add the service account email (found in `GCP_SERVICE_ACCOUNT_JSON` as `client_email`)
+   - Grant "Content Manager" or "Manager" role
+4. Use the folder ID in `DRIVE_FOLDER_ID` secret
+   - Open the folder in Drive, copy the ID from URL: `folders/[FOLDER_ID]`
 
 Alternatively, disable Drive backup by not setting `DRIVE_FOLDER_ID` secret. The pipeline will skip Drive upload and continue normally.
 
@@ -222,6 +227,15 @@ Custom thumbnails require a **verified YouTube account**. If you see "doesn't ha
 2. Or disable thumbnail upload by commenting out the `set_thumbnail` call
 
 The pipeline will now continue even if thumbnail upload fails.
+
+### YouTube Upload Timeout or "Processing too long" Error
+For large videos (90+ minutes), uploads may timeout. The code now uses:
+- **Resumable uploads** with 10MB chunks
+- **Progress tracking** during upload
+- **Automatic retry** for temporary errors (500, 502, 503, 504)
+- Up to 10 retries with exponential backoff
+
+If uploads still fail, the video is likely uploaded to YouTube but processing. Check your YouTube Studio dashboard.
 
 ### YouTube Upload Quota Exceeded
 YouTube API has daily upload quotas. Free tier: 6 uploads/day. Pipeline runs once daily (20:00 JST) to stay within limits.

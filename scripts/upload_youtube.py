@@ -1,5 +1,8 @@
+import time
+
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 
 
@@ -23,6 +26,13 @@ def upload_video(
     )
     youtube = build("youtube", "v3", credentials=creds)
 
+    # Use resumable upload with chunking for large files
+    media = MediaFileUpload(
+        video_path,
+        chunksize=10 * 1024 * 1024,  # 10MB chunks
+        resumable=True,
+    )
+
     request = youtube.videos().insert(
         part="snippet,status",
         body={
@@ -34,9 +44,35 @@ def upload_video(
             },
             "status": {"privacyStatus": privacy_status},
         },
-        media_body=MediaFileUpload(video_path, resumable=True),
+        media_body=media,
     )
-    response = request.execute()
+
+    # Execute resumable upload with retry logic
+    response = None
+    error = None
+    retry_count = 0
+    max_retries = 10
+
+    while response is None:
+        try:
+            print("Uploading video chunk...")
+            status, response = request.next_chunk()
+            if status:
+                progress = int(status.progress() * 100)
+                print(f"Upload progress: {progress}%")
+        except HttpError as e:
+            if e.resp.status in [500, 502, 503, 504]:
+                # Retriable error
+                error = f"Retriable error {e.resp.status}: {e}"
+                retry_count += 1
+                if retry_count > max_retries:
+                    raise Exception(f"Upload failed after {max_retries} retries: {error}")
+                print(f"{error}. Retrying in {retry_count * 2} seconds...")
+                time.sleep(retry_count * 2)
+            else:
+                raise
+
+    print("Upload complete!")
     return response.get("id")
 
 
