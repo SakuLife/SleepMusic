@@ -19,6 +19,7 @@ Automated daily pipeline to generate sleep BGM, create images, render a video, s
 
 **Minimum required (for YouTube upload only)**:
 - `KIEAI_API_KEY` - KieAI API key for Suno and Nano Banana
+- `GEMINI_API_KEY` - Google Gemini API key for AI-generated image prompt variations
 - `YOUTUBE_CLIENT_ID` - YouTube OAuth2 client ID
 - `YOUTUBE_CLIENT_SECRET` - YouTube OAuth2 client secret
 - `YOUTUBE_REFRESH_TOKEN` - YouTube OAuth2 refresh token

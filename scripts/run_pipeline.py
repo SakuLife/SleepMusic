@@ -14,6 +14,7 @@ from scripts.config import load_settings
 from scripts.image_generate import generate_images
 from scripts.kieai_client import KieAIClient
 from scripts.notify_discord import notify
+from scripts.prompt_generator import generate_image_variations
 from scripts.update_sheet import append_row
 from scripts.upload_drive import upload_to_drive
 from scripts.upload_youtube import set_thumbnail, upload_video
@@ -98,8 +99,17 @@ def main():
     seed = random.randint(1, 2_147_483_647)
     mood = random.choice(templates["moods"])
     season = choose_season(now.month, templates["seasons"])
-    bg_variation = random.choice(templates["image_variations"])
-    thumb_variation = random.choice(templates["image_variations"])
+
+    # Generate unique image variations using AI
+    bg_variation, thumb_variation = generate_image_variations(
+        settings["gemini_api_key"],
+        settings["gemini_model"],
+        season["jp"],
+        season["en"],
+        mood["jp"],
+        mood["en"],
+    )
+    print(f"Generated variations:\n  BG: {bg_variation}\n  Thumb: {thumb_variation}")
 
     title, description, suno_prompt, bg_prompt, thumb_prompt = build_texts(
         templates, mood, season, bg_variation, thumb_variation

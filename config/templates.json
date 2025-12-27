@@ -36,15 +36,5 @@
   "image_bg_prompt_jp": "美しい星空の夜、{season_jp}の風景、睡眠導入用、静かで幻想的、柔らかな光、落ち着いた色調、文字なし、{variation}",
   "image_bg_prompt_en": "Beautiful starry night sky over {season_en} landscape, sleep-inducing scene, peaceful and dreamy atmosphere, soft ambient light, muted color palette, no text, {variation}",
   "image_thumb_prompt_jp": "美しい星空の夜、{season_jp}の風景、睡眠導入用、静かで幻想的、柔らかな光、落ち着いた色調、中央にタイトル文字、{variation}",
-  "image_thumb_prompt_en": "Beautiful starry night sky over {season_en} landscape, sleep-inducing scene, peaceful and dreamy atmosphere, soft ambient light, muted color palette, centered title text, {variation}",
-  "image_variations": [
-    "深夜の静けさ、midnight tranquility",
-    "流れ星が見える、shooting stars visible",
-    "薄い霧が漂う、light fog drifting",
-    "遠くの山並み、distant mountain range",
-    "湖面に映る星空、stars reflecting on lake",
-    "樹木のシルエット、tree silhouettes",
-    "天の川が見える、milky way visible",
-    "雲が少しある、few clouds present"
-  ]
+  "image_thumb_prompt_en": "Beautiful starry night sky over {season_en} landscape, sleep-inducing scene, peaceful and dreamy atmosphere, soft ambient light, muted color palette, centered title text, {variation}"
 }
