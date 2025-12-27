@@ -40,8 +40,8 @@ Automated daily pipeline to generate sleep BGM, create images, render a video, s
 - `TARGET_MINUTES=90` - Target video duration
 - `CROSSFADE_SECONDS=12` - Audio loop crossfade duration
 - `YOUTUBE_PRIVACY=public` - YouTube video privacy setting
-- `KIEAI_NANOBANANA_BG_MODEL=nano-banana` - Background image model (no text)
-- `KIEAI_NANOBANANA_THUMB_MODEL=nano-banana-pro` - Thumbnail model (supports Japanese text)
+- `KIEAI_NANOBANANA_BG_MODEL=google/nano-banana` - Background image model (no text, uses image_size parameter)
+- `KIEAI_NANOBANANA_THUMB_MODEL=nano-banana-pro` - Thumbnail model (supports Japanese text, uses aspect_ratio+resolution)
 - See `.env.example` for full list
 
 ## Running Locally

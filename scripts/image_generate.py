@@ -18,10 +18,10 @@ def generate_images(
     seed,
     bg_path,
     thumb_path,
-    bg_model="nano-banana",
+    bg_model="google/nano-banana",
     thumb_model="nano-banana-pro",
 ):
-    # Background: nano-banana (no text, cheaper)
+    # Background: google/nano-banana (no text, cheaper)
     bg_url = client.generate_nanobanana(bg_prompt, seed=seed, with_text=False, model=bg_model)
     download_image(bg_url, bg_path)
 
