@@ -34,7 +34,7 @@ def load_settings():
             "KIEAI_NANOBANANA_ENDPOINT", "/api/v1/jobs/createTask"
         ),
         "kieai_nanobanana_model": get_env(
-            "KIEAI_NANOBANANA_MODEL", "google/nano-banana-pro"
+            "KIEAI_NANOBANANA_MODEL", "google/nano-banana"
         ),
         "drive_folder_id": get_env("DRIVE_FOLDER_ID"),
         "sheets_id": get_env("SHEETS_ID"),

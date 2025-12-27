@@ -40,7 +40,7 @@ def choose_season(month, seasons):
     return seasons[index]
 
 
-def build_texts(templates, mood, season):
+def build_texts(templates, mood, season, bg_variation, thumb_variation):
     title_jp = random.choice(templates["title_templates"]).format(
         season_jp=season["jp"], mood_jp=mood["jp"]
     )
@@ -60,16 +60,16 @@ def build_texts(templates, mood, season):
         season_en=season["en"], mood_en=mood["en"]
     )
     bg_prompt_jp = templates["image_bg_prompt_jp"].format(
-        season_jp=season["jp"], mood_jp=mood["jp"]
+        season_jp=season["jp"], mood_jp=mood["jp"], variation=bg_variation
     )
     bg_prompt_en = templates["image_bg_prompt_en"].format(
-        season_en=season["en"], mood_en=mood["en"]
+        season_en=season["en"], mood_en=mood["en"], variation=bg_variation
     )
     thumb_prompt_jp = templates["image_thumb_prompt_jp"].format(
-        season_jp=season["jp"], mood_jp=mood["jp"]
+        season_jp=season["jp"], mood_jp=mood["jp"], variation=thumb_variation
     )
     thumb_prompt_en = templates["image_thumb_prompt_en"].format(
-        season_en=season["en"], mood_en=mood["en"]
+        season_en=season["en"], mood_en=mood["en"], variation=thumb_variation
     )
 
     title = f"{title_jp} / {title_en}"
@@ -98,9 +98,11 @@ def main():
     seed = random.randint(1, 2_147_483_647)
     mood = random.choice(templates["moods"])
     season = choose_season(now.month, templates["seasons"])
+    bg_variation = random.choice(templates["image_variations"])
+    thumb_variation = random.choice(templates["image_variations"])
 
     title, description, suno_prompt, bg_prompt, thumb_prompt = build_texts(
-        templates, mood, season
+        templates, mood, season, bg_variation, thumb_variation
     )
 
     output_dir = os.path.join("output", now.strftime("%Y%m%d"))
