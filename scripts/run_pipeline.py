@@ -120,7 +120,7 @@ def main():
     )
 
     audio_url = retry_call(
-        lambda: client.generate_suno(suno_prompt, seed),
+        lambda: client.generate_suno(suno_prompt, seed, instrumental=True),
         max_retries=settings["max_retries"],
     )
     download_file(audio_url, raw_audio)
