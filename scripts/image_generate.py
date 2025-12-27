@@ -18,12 +18,15 @@ def generate_images(
     seed,
     bg_path,
     thumb_path,
-    model="google/nano-banana",
+    bg_model="google/nano-banana",
+    thumb_model="google/nano-banana-pro",
 ):
-    bg_url = client.generate_nanobanana(bg_prompt, seed=seed, with_text=False, model=model)
+    # Background: nano-banana (no text)
+    bg_url = client.generate_nanobanana(bg_prompt, seed=seed, with_text=False, model=bg_model)
     download_image(bg_url, bg_path)
 
-    thumb_url = client.generate_nanobanana(thumb_prompt, seed=seed, with_text=True, model=model)
+    # Thumbnail: nano-banana-pro (supports Japanese text)
+    thumb_url = client.generate_nanobanana(thumb_prompt, seed=seed, with_text=True, model=thumb_model)
     download_image(thumb_url, thumb_path)
 
     return bg_path, thumb_path

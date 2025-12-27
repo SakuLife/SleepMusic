@@ -150,7 +150,8 @@ def main():
     retry_call(
         lambda: generate_images(
             client, bg_prompt, thumb_prompt, seed, bg_path, thumb_path,
-            model=settings["kieai_nanobanana_model"]
+            bg_model=settings["kieai_nanobanana_bg_model"],
+            thumb_model=settings["kieai_nanobanana_thumb_model"]
         ),
         max_retries=settings["max_retries"],
     )
