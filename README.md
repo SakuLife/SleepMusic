@@ -30,6 +30,7 @@ Automated daily pipeline to generate sleep BGM, create images, render a video, s
   - Service accounts cannot use personal Drive, only shared drives
   - The service account email must be added as a member of the shared drive
 - `SHEETS_ID` - Google Sheets ID for execution logging
+  - Header row is automatically added on first run: `実行日時 | Seed | 音楽プロンプト | 背景画像プロンプト | サムネイルプロンプト | Drive URL | YouTube URL | ステータス`
 
 **Optional (for notifications)**:
 - `DISCORD_WEBHOOK_URL` - Discord webhook for success/error notifications

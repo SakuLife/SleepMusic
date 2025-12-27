@@ -161,17 +161,25 @@ def main():
     # Upload to Drive (optional, requires GCP service account and shared drive)
     drive_url = None
     if settings["gcp_service_account"] and settings["drive_folder_id"]:
+        # Use date-based filename for easy identification
+        drive_filename = f"SleepMusic_{now.strftime('%Y%m%d_%H%M%S')}.mp4"
+        print(f"Uploading to Drive folder: {settings['drive_folder_id']}")
+        print(f"  Filename: {drive_filename}")
         try:
             drive_url = upload_to_drive(
                 settings["gcp_service_account"],
                 video_path,
-                os.path.basename(video_path),
+                drive_filename,
                 settings["drive_folder_id"],
             )
-            print(f"Uploaded to Drive: {drive_url}")
+            print(f"✓ Uploaded to Drive: {drive_url}")
         except Exception as e:
-            print(f"Warning: Drive upload failed (continuing anyway): {e}")
+            print(f"✗ Warning: Drive upload failed (continuing anyway): {e}")
+            import traceback
+            traceback.print_exc()
             # Continue pipeline even if Drive upload fails
+    else:
+        print("Drive upload skipped (GCP_SERVICE_ACCOUNT_JSON or DRIVE_FOLDER_ID not set)")
 
     # Calculate publish time: today at 20:00 JST
     publish_time = now.replace(hour=20, minute=0, second=0, microsecond=0)
@@ -218,7 +226,9 @@ def main():
     youtube_url = f"https://youtu.be/{video_id}"
 
     # Log to Sheets (optional, requires GCP service account)
+    # Expected header row: Date | Seed | Suno Prompt | BG Prompt | Thumb Prompt | Drive URL | YouTube URL | Status
     if settings["gcp_service_account"] and settings["sheets_id"]:
+        print(f"Logging to Sheets: {settings['sheets_id']}")
         try:
             append_row(
                 settings["gcp_service_account"],
@@ -235,9 +245,13 @@ def main():
                     "success",
                 ],
             )
-            print(f"Logged to Sheets: {settings['sheets_id']}")
+            print(f"✓ Logged to Sheets: {settings['sheets_id']}")
         except Exception as e:
-            print(f"Warning: Sheets logging failed (continuing anyway): {e}")
+            print(f"✗ Warning: Sheets logging failed (continuing anyway): {e}")
+            import traceback
+            traceback.print_exc()
+    else:
+        print("Sheets logging skipped (GCP_SERVICE_ACCOUNT_JSON or SHEETS_ID not set)")
 
     # Discord notification (optional)
     if settings["discord_webhook_url"]:
