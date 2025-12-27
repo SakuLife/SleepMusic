@@ -98,6 +98,7 @@ class KieAIClient:
 
         payload = {
             "model": model,
+            "callBackUrl": "http://localhost:8000/callback",  # Required but not used for polling
             "input": {
                 "prompt": prompt,
                 "aspect_ratio": "16:9",

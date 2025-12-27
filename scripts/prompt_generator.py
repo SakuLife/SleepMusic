@@ -1,6 +1,3 @@
-import google.generativeai as genai
-
-
 def generate_image_variations(api_key, model, season_jp, season_en, mood_jp, mood_en):
     """
     Generate unique image prompt variations using Gemini AI.
@@ -11,9 +8,6 @@ def generate_image_variations(api_key, model, season_jp, season_en, mood_jp, moo
     if not api_key:
         # Fallback: return simple variations if no API key
         return "星空の夜、starry night", "美しい夜空、beautiful night sky"
-
-    genai.configure(api_key=api_key)
-    llm = genai.GenerativeModel(model)
 
     prompt = f"""あなたは睡眠用BGM動画の画像プロンプト生成AIです。
 
@@ -33,18 +27,45 @@ def generate_image_variations(api_key, model, season_jp, season_en, mood_jp, moo
 バリエーション1の日本語、バリエーション1の英語
 バリエーション2の日本語、バリエーション2の英語"""
 
+    # Try new google-genai package first
     try:
-        response = llm.generate_content(prompt)
-        lines = response.text.strip().split('\n')
+        from google import genai
+        client = genai.Client(api_key=api_key)
 
+        # Use gemini-2.0-flash-exp for new API
+        response = client.models.generate_content(
+            model="gemini-2.0-flash-exp",
+            contents=prompt
+        )
+
+        lines = response.text.strip().split('\n')
         if len(lines) >= 2:
             bg_variation = lines[0].strip()
             thumb_variation = lines[1].strip()
             return bg_variation, thumb_variation
         else:
-            # Fallback if response format is unexpected
             return "星空の夜、starry night", "美しい夜空、beautiful night sky"
 
     except Exception as e:
-        print(f"Warning: Gemini API failed ({e}), using fallback variations")
-        return "星空の夜、starry night", "美しい夜空、beautiful night sky"
+        print(f"Note: New Gemini API failed ({e}), trying old API...")
+
+        # Fallback to old google.generativeai package
+        try:
+            import google.generativeai as genai_old
+            genai_old.configure(api_key=api_key)
+
+            # Use gemini-1.5-flash for old API
+            llm = genai_old.GenerativeModel("gemini-1.5-flash")
+            response = llm.generate_content(prompt)
+
+            lines = response.text.strip().split('\n')
+            if len(lines) >= 2:
+                bg_variation = lines[0].strip()
+                thumb_variation = lines[1].strip()
+                return bg_variation, thumb_variation
+            else:
+                return "星空の夜、starry night", "美しい夜空、beautiful night sky"
+
+        except Exception as e2:
+            print(f"Warning: Gemini API failed ({e2}), using fallback variations")
+            return "星空の夜、starry night", "美しい夜空、beautiful night sky"

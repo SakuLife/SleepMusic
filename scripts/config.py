@@ -28,7 +28,7 @@ def load_json_env(name, required=False):
 def load_settings():
     return {
         "gemini_api_key": get_env("GEMINI_API_KEY") or get_env("GEMINI_API_KIE"),
-        "gemini_model": get_env("GEMINI_MODEL", "gemini-1.5-flash"),
+        "gemini_model": get_env("GEMINI_MODEL", "gemini-2.0-flash-exp"),
         "kieai_api_key": get_env("KIEAI_API_KEY", required=True),
         "kieai_api_base": get_env("KIEAI_API_BASE", "https://api.kie.ai"),
         "kieai_suno_endpoint": get_env("KIEAI_SUNO_ENDPOINT", "/api/v1/generate"),
