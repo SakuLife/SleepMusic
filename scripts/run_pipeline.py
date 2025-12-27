@@ -158,16 +158,18 @@ def main():
 
     render_video(bg_path, processed_audio, video_path)
 
-    # Upload to Drive (optional, requires GCP service account and shared drive)
+    # Upload to Drive (optional, requires OAuth credentials)
     drive_url = None
-    if settings["gcp_service_account"] and settings["drive_folder_id"]:
+    if settings["google_refresh_token"] and settings["drive_folder_id"]:
         # Use date-based filename for easy identification
         drive_filename = f"SleepMusic_{now.strftime('%Y%m%d_%H%M%S')}.mp4"
         print(f"Uploading to Drive folder: {settings['drive_folder_id']}")
         print(f"  Filename: {drive_filename}")
         try:
             drive_url = upload_to_drive(
-                settings["gcp_service_account"],
+                settings["youtube_client_id"],
+                settings["youtube_client_secret"],
+                settings["google_refresh_token"],
                 video_path,
                 drive_filename,
                 settings["drive_folder_id"],
@@ -179,7 +181,7 @@ def main():
             traceback.print_exc()
             # Continue pipeline even if Drive upload fails
     else:
-        print("Drive upload skipped (GCP_SERVICE_ACCOUNT_JSON or DRIVE_FOLDER_ID not set)")
+        print("Drive upload skipped (GOOGLE_REFRESH_TOKEN or DRIVE_FOLDER_ID not set)")
 
     # Calculate publish time: today at 20:00 JST
     publish_time = now.replace(hour=20, minute=0, second=0, microsecond=0)

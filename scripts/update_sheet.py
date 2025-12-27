@@ -10,9 +10,10 @@ def ensure_header_row(service_account_info, sheets_id, range_name):
 
     # Check if sheet has data
     try:
+        # Use simple range "A1:H1" to check first row
         result = service.spreadsheets().values().get(
             spreadsheetId=sheets_id,
-            range=range_name,
+            range="A1:H1",
         ).execute()
         values = result.get("values", [])
 
@@ -30,11 +31,11 @@ def ensure_header_row(service_account_info, sheets_id, range_name):
             ]
             service.spreadsheets().values().update(
                 spreadsheetId=sheets_id,
-                range=range_name.split("!")[0] + "!A1:H1",  # Force first row
+                range="A1:H1",
                 valueInputOption="USER_ENTERED",
                 body={"values": [header]},
             ).execute()
-            print("✓ Added header row to Sheets")
+            print("Added header row to Sheets")
     except Exception as e:
         print(f"Note: Could not check/add header (continuing anyway): {e}")
 

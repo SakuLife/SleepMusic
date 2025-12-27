@@ -42,8 +42,9 @@ def load_settings():
             "KIEAI_NANOBANANA_THUMB_MODEL", "nano-banana-pro"
         ),
         "drive_folder_id": get_env("DRIVE_FOLDER_ID"),
+        "google_refresh_token": get_env("GOOGLE_REFRESH_TOKEN"),
         "sheets_id": get_env("SHEETS_ID"),
-        "sheets_range": get_env("SHEETS_RANGE", "Sheet1!A:H"),
+        "sheets_range": get_env("SHEETS_RANGE", "A:H"),
         "discord_webhook_url": get_env("DISCORD_WEBHOOK_URL"),
         "gcp_service_account": load_json_env("GCP_SERVICE_ACCOUNT_JSON"),
         "youtube_client_id": get_env("YOUTUBE_CLIENT_ID", required=True),

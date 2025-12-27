@@ -25,12 +25,11 @@ Automated daily pipeline to generate sleep BGM, create images, render a video, s
 - `YOUTUBE_REFRESH_TOKEN` - YouTube OAuth2 refresh token
 
 **Optional (for Drive backup and Sheets logging)**:
-- `GCP_SERVICE_ACCOUNT_JSON` - Full GCP service account JSON
-- `DRIVE_FOLDER_ID` - Google Drive **shared drive** folder ID (example: `1rd89Gs8aM2h2wB5ot0_MJc2NK9Fi_KzB`)
-  - Service accounts cannot use personal Drive, only shared drives
-  - The service account email must be added as a member of the shared drive
+- `GOOGLE_REFRESH_TOKEN` - Google OAuth refresh token for Drive uploads (obtained via `python scripts/setup_drive_oauth.py`)
+- `DRIVE_FOLDER_ID` - Google Drive folder ID (example: `1rd89Gs8aM2h2wB5ot0_MJc2NK9Fi_KzB`)
+- `GCP_SERVICE_ACCOUNT_JSON` - GCP service account JSON (for Sheets logging only)
 - `SHEETS_ID` - Google Sheets ID for execution logging
-  - Header row is automatically added on first run: `実行日時 | Seed | 音楽プロンプト | 背景画像プロンプト | サムネイルプロンプト | Drive URL | YouTube URL | ステータス`
+  - Header row is automatically added on first run: `Date | Seed | Music Prompt | BG Image Prompt | Thumbnail Prompt | Drive URL | YouTube URL | Status`
 
 **Optional (for notifications)**:
 - `DISCORD_WEBHOOK_URL` - Discord webhook for success/error notifications
