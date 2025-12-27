@@ -43,7 +43,7 @@ def load_settings():
         ),
         "drive_folder_id": get_env("DRIVE_FOLDER_ID"),
         "sheets_id": get_env("SHEETS_ID"),
-        "sheets_range": get_env("SHEETS_RANGE", "Sheet1!A2"),
+        "sheets_range": get_env("SHEETS_RANGE", "Sheet1!A:H"),
         "discord_webhook_url": get_env("DISCORD_WEBHOOK_URL"),
         "gcp_service_account": load_json_env("GCP_SERVICE_ACCOUNT_JSON"),
         "youtube_client_id": get_env("YOUTUBE_CLIENT_ID", required=True),
