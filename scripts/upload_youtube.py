@@ -1,4 +1,5 @@
 import time
+from datetime import datetime, timedelta, timezone
 
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
@@ -15,6 +16,7 @@ def upload_video(
     description,
     tags,
     privacy_status="public",
+    publish_at=None,
 ):
     creds = Credentials(
         None,
@@ -33,6 +35,19 @@ def upload_video(
         resumable=True,
     )
 
+    # Build status object
+    status = {
+        "privacyStatus": privacy_status,
+        "selfDeclaredMadeForKids": False,  # Not made for kids
+    }
+
+    # Add scheduled publish time if provided
+    if publish_at:
+        status["publishAt"] = publish_at
+        # Must be private or unlisted for scheduled publishing
+        if privacy_status == "public":
+            status["privacyStatus"] = "private"
+
     request = youtube.videos().insert(
         part="snippet,status",
         body={
@@ -42,10 +57,7 @@ def upload_video(
                 "tags": tags,
                 "categoryId": "10",  # Music category
             },
-            "status": {
-                "privacyStatus": privacy_status,
-                "selfDeclaredMadeForKids": False,  # Not made for kids
-            },
+            "status": status,
         },
         media_body=media,
     )

@@ -159,6 +159,15 @@ def main():
             print(f"Warning: Drive upload failed (continuing anyway): {e}")
             # Continue pipeline even if Drive upload fails
 
+    # Calculate publish time: today at 20:00 JST
+    publish_time = now.replace(hour=20, minute=0, second=0, microsecond=0)
+    # If current time is past 20:00, schedule for tomorrow
+    if now >= publish_time:
+        publish_time += timedelta(days=1)
+    # Convert to ISO 8601 format for YouTube API
+    publish_at = publish_time.isoformat()
+    print(f"Scheduled publish time: {publish_time.strftime('%Y-%m-%d %H:%M:%S %Z')}")
+
     video_id = retry_call(
         lambda: upload_video(
             settings["youtube_client_id"],
@@ -169,6 +178,7 @@ def main():
             f"{description}\n\n#sleepmusic #relax #ambient #bedtime",
             templates["tags"],
             privacy_status=settings["youtube_privacy"],
+            publish_at=publish_at,
         ),
         max_retries=settings["max_retries"],
     )

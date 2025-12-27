@@ -1,6 +1,8 @@
 # SleepMusic Pipeline
 
-Automated daily pipeline to generate sleep BGM, create images, render a video, save to Drive/Sheets, and upload to YouTube.
+Automated daily pipeline to generate sleep BGM, create images, render a video, save to Drive/Sheets, and upload to YouTube with scheduled publishing.
+
+**Schedule**: Runs daily at 17:00 JST, publishes to YouTube at 20:00 JST.
 
 ## Structure
 - `scripts/run_pipeline.py`: Orchestrates the end-to-end flow

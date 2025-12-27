@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Automated daily pipeline that generates 90-minute sleep music videos and uploads them to YouTube. The pipeline:
+Automated daily pipeline that generates 90-minute sleep music videos and uploads them to YouTube with scheduled publishing. The pipeline:
 
 1. Generates ~4-minute ambient music using Suno AI (KieAI API)
 2. Processes audio: applies 4000Hz lowpass filter, loops to 90 minutes with crossfades
@@ -14,7 +14,9 @@ Automated daily pipeline that generates 90-minute sleep music videos and uploads
 6. Backs up to Google Drive and logs to Google Sheets
 7. Sends Discord notifications
 
-Runs daily at 20:00 JST via GitHub Actions (`.github/workflows/daily.yml`).
+**Schedule**:
+- Runs daily at **17:00 JST** via GitHub Actions (`.github/workflows/daily.yml`)
+- Videos are uploaded as **private** and scheduled to publish at **20:00 JST** the same day
 
 ## Development Commands
 
