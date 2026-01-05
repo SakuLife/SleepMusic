@@ -2,7 +2,7 @@ name: daily-sleepmusic
 
 on:
   schedule:
-    - cron: "0 8 * * *"  # UTC 08:00 = JST 17:00
+    - cron: "0 8 */3 * *"  # Every 3 days at UTC 08:00 = JST 17:00
   workflow_dispatch:
 
 jobs:

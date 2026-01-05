@@ -17,6 +17,7 @@ def upload_video(
     tags,
     privacy_status="public",
     publish_at=None,
+    thumbnail_path=None,
 ):
     creds = Credentials(
         None,
@@ -94,7 +95,20 @@ def upload_video(
                 raise
 
     print("Upload complete!")
-    return response.get("id")
+    video_id = response.get("id")
+
+    # Set custom thumbnail if provided
+    if thumbnail_path:
+        try:
+            print("Setting custom thumbnail...")
+            set_thumbnail(client_id, client_secret, refresh_token, video_id, thumbnail_path)
+            print("Thumbnail set successfully!")
+        except Exception as e:
+            print(f"Warning: Failed to set thumbnail: {e}")
+            print("Note: Custom thumbnails require a verified YouTube account")
+            # Continue anyway - video upload succeeded
+
+    return video_id
 
 
 def set_thumbnail(client_id, client_secret, refresh_token, video_id, thumbnail_path):

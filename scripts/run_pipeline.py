@@ -17,7 +17,7 @@ from scripts.notify_discord import notify
 from scripts.prompt_generator import generate_image_variations
 from scripts.update_sheet import append_row
 from scripts.upload_drive import upload_to_drive
-from scripts.upload_youtube import set_thumbnail, upload_video
+from scripts.upload_youtube import upload_video
 from scripts.utils import retry_call
 from scripts.video_render import render_video
 
@@ -203,27 +203,11 @@ def main():
             templates["tags"],
             privacy_status=settings["youtube_privacy"],
             publish_at=publish_at,
+            thumbnail_path=thumb_path,
         ),
         max_retries=settings["max_retries"],
     )
     print(f"Video uploaded successfully: https://youtu.be/{video_id}")
-
-    # Set thumbnail (optional, requires verified YouTube account)
-    try:
-        retry_call(
-            lambda: set_thumbnail(
-                settings["youtube_client_id"],
-                settings["youtube_client_secret"],
-                settings["youtube_refresh_token"],
-                video_id,
-                thumb_path,
-            ),
-            max_retries=settings["max_retries"],
-        )
-        print("Thumbnail set successfully")
-    except Exception as e:
-        print(f"Warning: Thumbnail upload failed (continuing anyway): {e}")
-        print("Note: Custom thumbnails require a verified YouTube account")
 
     youtube_url = f"https://youtu.be/{video_id}"
 
