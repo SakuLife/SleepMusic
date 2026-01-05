@@ -13,16 +13,54 @@
     { "jp": "秋", "en": "autumn" },
     { "jp": "冬", "en": "winter" }
   ],
-  "title_templates": [
-    "今日のおやすみBGM｜{season_jp}の{mood_jp}アンビエント｜90分",
-    "眠れる音楽 {season_jp}編｜{mood_jp}に溶ける90分"
+  "title_category": "【夜の癒しBGM】",
+  "title_catchphrase_templates_jp": [
+    "1日の終わりに、{season_jp}の夜にとける時間",
+    "{season_jp}の夜、{mood_jp}音に包まれる90分",
+    "静かな{season_jp}の夜、心がほどけていく音楽",
+    "{mood_jp}{season_jp}の夜空に溶ける、深い眠りへ"
   ],
-  "title_templates_en": [
-    "Tonight's Sleep BGM | {season_en} {mood_en} ambient | 90 min",
-    "Sleep Music {season_en} edition | {mood_en} vibes for 90 min"
+  "title_main_templates_en": [
+    "Melting into the {season_en} Night – {mood_en} Ambient",
+    "Wrapped in {mood_en} Sounds – {season_en} Night Music",
+    "Drifting Through {season_en} – {mood_en} Sleep Ambient",
+    "Dissolving into {season_en} Skies – Deep Sleep Sounds"
   ],
-  "description_template_jp": "今日のBGMは{season_jp}の{mood_jp}をイメージした睡眠用音楽です。\n90分のループで眠りをサポートします。",
-  "description_template_en": "Tonight's sleep music is inspired by {season_en} and a {mood_en} feeling.\nA 90-minute loop to help you fall asleep.",
+  "title_emojis": ["🌙✨", "🌙🎵", "✨🎶", "🌙💫"],
+  "description_catchphrase_jp": "🌙 1日の終わりに、{season_jp}の夜にとける時間。",
+  "description_main_jp": [
+    "夜が静かになると、\n心もそっと落ち着いていく気がします。",
+    "広がる音色が、\nその静けさに寄り添うようにゆっくりと流れ、\n今日の疲れをやわらかくほどいてくれますように。",
+    "どうぞ、力を抜きながら\n音にとけていくような夜をお過ごしください。🌙"
+  ],
+  "description_cta_jp": "Thanks a ton for stopping by.\nYour quiet presence keeps this peaceful space alive.\n→ チャンネル登録＆グッドボタンで応援していただけると嬉しいです。",
+  "description_ai_note_jp": "Music & Visuals blend AI creativity with a human touch.\nPerfect for sleep, deep rest, and calm {season_en} nights.",
+  "description_catchphrase_en": "🌙 Melting into the Night – {mood_en} {season_en} Ambient",
+  "description_main_en": [
+    "When the night grows quiet,\nthe heart seems to settle softly on its own.",
+    "May these gentle tones\nmelt into the stillness\nand ease away the weight of your day.",
+    "Let the calm guide you,\nand drift into a night that feels quietly soft. 🌙"
+  ],
+  "description_cta_en": "Thanks a ton for being here —\nyour calm support truly keeps this space glowing.\n→ Don't forget to like & subscribe for more peaceful nights.",
+  "description_ai_note_en": "Both music and visuals are crafted with care,\nblending AI expression and human feeling.\nPerfect for sleep, relaxation, and slow {season_en} evenings.",
+  "description_recommended": "Sleep / Deep Rest / Relaxation / Night Routine / Calm Focus",
+  "description_credits": "Music : Suno AI\nVisual : Nano Banana AI\nConcept : Sleep Music Channel",
+  "hashtags_main": [
+    "#sleepmusic",
+    "#relaxingmusic",
+    "#ambient",
+    "#nightbgm",
+    "#癒し音楽",
+    "#夜の癒しBGM",
+    "#作業用BGM",
+    "#リラックス音楽"
+  ],
+  "hashtags_seasonal": {
+    "spring": ["#春BGM", "#springambient"],
+    "summer": ["#夏BGM", "#summerambient"],
+    "autumn": ["#秋BGM", "#autumnambient"],
+    "winter": ["#冬BGM", "#winterambient"]
+  },
   "tags": [
     "sleep music",
     "relaxing",

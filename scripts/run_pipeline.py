@@ -42,18 +42,72 @@ def choose_season(month, seasons):
 
 
 def build_texts(templates, mood, season, bg_variation, thumb_variation):
-    title_jp = random.choice(templates["title_templates"]).format(
+    # Build title: 【カテゴリー】日本語キャッチフレーズ｜英語タイトル 絵文字
+    title_catchphrase_jp = random.choice(templates["title_catchphrase_templates_jp"]).format(
         season_jp=season["jp"], mood_jp=mood["jp"]
     )
-    title_en = random.choice(templates["title_templates_en"]).format(
+    title_main_en = random.choice(templates["title_main_templates_en"]).format(
         season_en=season["en"], mood_en=mood["en"]
     )
-    description_jp = templates["description_template_jp"].format(
-        season_jp=season["jp"], mood_jp=mood["jp"]
-    )
-    description_en = templates["description_template_en"].format(
-        season_en=season["en"], mood_en=mood["en"]
-    )
+    title_emoji = random.choice(templates["title_emojis"])
+    title = f"{templates['title_category']}{title_catchphrase_jp}｜{title_main_en} {title_emoji}"
+
+    # Build description with multiple sections
+    description_parts = []
+
+    # Japanese section
+    description_parts.append(templates["description_catchphrase_jp"].format(season_jp=season["jp"]))
+    description_parts.append("")  # Empty line
+    for line in templates["description_main_jp"]:
+        description_parts.append(line.format(mood_jp=mood["jp"]))
+        description_parts.append("")  # Empty line after each paragraph
+    description_parts.append(templates["description_cta_jp"])
+    description_parts.append("")
+    description_parts.append(templates["description_ai_note_jp"].format(season_en=season["en"]))
+    description_parts.append("")
+    description_parts.append("⸻")
+    description_parts.append("")
+
+    # English section
+    description_parts.append(templates["description_catchphrase_en"].format(
+        mood_en=mood["en"], season_en=season["en"]
+    ))
+    description_parts.append("")
+    for line in templates["description_main_en"]:
+        description_parts.append(line.format(mood_en=mood["en"]))
+        description_parts.append("")
+    description_parts.append(templates["description_cta_en"])
+    description_parts.append("")
+    description_parts.append(templates["description_ai_note_en"].format(season_en=season["en"]))
+    description_parts.append("")
+    description_parts.append("⸻")
+    description_parts.append("")
+
+    # Recommended section
+    description_parts.append("🎧 Recommended for:")
+    description_parts.append("")
+    description_parts.append(templates["description_recommended"])
+    description_parts.append("")
+    description_parts.append("⸻")
+    description_parts.append("")
+
+    # Credits section
+    description_parts.append("🎨 Credits")
+    description_parts.append("")
+    description_parts.append(templates["description_credits"])
+    description_parts.append("")
+    description_parts.append("⸻")
+    description_parts.append("")
+
+    # Hashtags section
+    description_parts.append("🎧 Hashtags")
+    description_parts.append("")
+    hashtags = templates["hashtags_main"] + templates["hashtags_seasonal"][season["en"]]
+    description_parts.append(" ".join(hashtags))
+
+    description = "\n".join(description_parts)
+
+    # Prompts remain the same
     prompt_jp = templates["suno_prompt_jp"].format(
         season_jp=season["jp"], mood_jp=mood["jp"]
     )
@@ -72,9 +126,6 @@ def build_texts(templates, mood, season, bg_variation, thumb_variation):
     thumb_prompt_en = templates["image_thumb_prompt_en"].format(
         season_en=season["en"], mood_en=mood["en"], variation=thumb_variation
     )
-
-    title = f"{title_jp} / {title_en}"
-    description = f"{description_jp}\n\n{description_en}"
 
     suno_prompt = f"{prompt_jp}\n{prompt_en}"
     bg_prompt = f"{bg_prompt_jp}\n{bg_prompt_en}"
@@ -199,7 +250,7 @@ def main():
             settings["youtube_refresh_token"],
             video_path,
             title,
-            f"{description}\n\n#sleepmusic #relax #ambient #bedtime",
+            description,
             templates["tags"],
             privacy_status=settings["youtube_privacy"],
             publish_at=publish_at,
